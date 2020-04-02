@@ -1,0 +1,24 @@
+# # NOTE: update this with your service name
+# The service option is pretty important. We are calling our service the notes-app-api. Serverless Framework creates your stack on AWS using this as the name.
+# This means that if you change the name and deploy your project, it will create a completely new project.
+service: notes-app-api
+
+# Create an optimized package for our functions
+# By default, Serverless Framework creates one large package for all the Lambda functions in your app. 
+# Large Lambda function packages can cause longer cold starts. By setting individually: 
+# true, we are telling Serverless Framework to create a single package per Lambda function. 
+# This in combination with serverless-bundle (and Webpack) will generate optimized packages.
+# Note that, this’ll slow down our builds but the performance benefit is well worth it.
+package:
+  individually: true
+
+plugins:
+  - serverless-bundle # Package our functions with Webpack
+  - serverless-offline
+  - serverless-dotenv-plugin # Load .env as environment variables
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: prod
+  region: us-east-1
